@@ -6,7 +6,7 @@
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demowebapp Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<url>https://code.google.com/p/weinschenker-jee-tutorial/</url>
 	<properties>
 		<env>dev</env>
 	</properties>
@@ -31,6 +31,13 @@
 			</properties>
 		</profile>
 	</profiles>
+	<issueManagement>
+		<system>Google Code</system>
+		<url>https://code.google.com/p/weinschenker-jee-tutorial/issues/list</url>
+	</issueManagement>
+	<scm>
+		<url>https://weinschenker-jee-tutorial.googlecode.com/svn/</url>
+	</scm>
 	<build>
 		<finalName>demowebapp</finalName>
 		<filters>

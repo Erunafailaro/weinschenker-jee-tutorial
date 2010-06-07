@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.QueryHint;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -15,6 +18,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "EVEONLINE.TABLE_USERS")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@NamedQueries( {
+		@NamedQuery(name = "users.oneuser", query = "select u from Users u where u.name = :name and u.password = :password", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }),
+		@NamedQuery(name = "users.all", query = "select u from Users u", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }) })
 public class Users implements Serializable {
 
 	/**
@@ -26,9 +32,9 @@ public class Users implements Serializable {
 	protected String name;
 	protected String password;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	public Long getId() {
 		return id;
 	}
@@ -55,7 +61,8 @@ public class Users implements Serializable {
 	}
 
 	/**
-	 * @param pasword the pasword to set
+	 * @param pasword
+	 *            the pasword to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;

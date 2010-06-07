@@ -21,37 +21,46 @@ import org.weinschenker.demowebapp.persistence.entities.Users;
  */
 public class BasicDAOImpl extends HibernateDaoSupport implements BasicDao {
 
-	@PersistenceContext(unitName="eve")
+	@PersistenceContext(unitName = "eve")
 	private EntityManager entityManager;
-	
+
 	@Resource
 	private SessionFactory sessionFactory;
-	
+
 	@PostConstruct
 	public void init() {
 		setSessionFactory(sessionFactory);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.weinschenker.demowebapp.persistence.BasicDao#setEntityManager(javax.persistence.EntityManager)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.weinschenker.demowebapp.persistence.BasicDao#setEntityManager(javax
+	 * .persistence.EntityManager)
 	 */
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.weinschenker.demowebapp.persistence.BasicDao#query(java.lang.String, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.weinschenker.demowebapp.persistence.BasicDao#query(java.lang.String,
+	 * java.lang.Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Users> query(String queryString, final Object... params) {
-		Query query = entityManager.createQuery(queryString);
+		final Query query = entityManager.createQuery(queryString);
 		query.setParameter("param", "true");
 		return query.getResultList();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Users> getAllUsers(){
-		return getHibernateTemplate().loadAll(Users.class);
+	public List<Users> getAllUsers() {
+		final Query q = entityManager.createNamedQuery("users.all");
+		return (List<Users>) q.getResultList();
 	}
 }

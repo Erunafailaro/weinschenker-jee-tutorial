@@ -1,0 +1,61 @@
+<project name="MyProject" default="tomcat-start-debug" basedir=".">
+	<description>
+        simple example build file
+    </description>
+	<property name="name" value="newapp" />
+	<property file="build.properties" />
+	<taskdef name="start" classname="org.apache.catalina.ant.StartTask" />
+	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask" />
+
+	<target name="tomcat-start">
+		<java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
+			<jvmarg value="-Dcatalina.home=${tomcat.home}" />
+		</java>
+	</target>
+
+	<target name="tomcat-stop">
+		<java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
+			<jvmarg value="-Dcatalina.home=${tomcat.home}" />
+			<arg line="stop" />
+		</java>
+	</target>
+
+	<target name="tomcat-start-debug">
+		<java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
+			<jvmarg value="-Dcatalina.home=${tomcat.home}" />
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n" />
+		</java>
+	</target>
+
+	<target name="copy.jsp">
+		<copy verbose="true" todir="${tomcat.home}/webapps/${demo.path}">
+			<fileset dir="${project.path}/src/main/webapp">
+				<include name="**/*.jsp" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="copy.war">
+		<copy verbose="true" todir="${tomcat.home}/webapps/">
+			<fileset dir="${project.path}/target/">
+				<include name="${demo.path}.war" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="clear.all" depends="clear.work">
+		<delete verbose="true" includeemptydirs="true">
+			<fileset dir="${tomcat.home}/webapps/${demo.path}" />
+		</delete>
+		<delete verbose="true" includeemptydirs="true">
+			<fileset dir="${tomcat.home}/webapps" includes="${demo.path}.war" />
+		</delete>
+	</target>
+	<target name="clear.work">
+		<delete verbose="true">
+			<fileset dir="${tomcat.home}/work/Catalina">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+	
+</project>

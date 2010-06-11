@@ -26,8 +26,6 @@ public class Example {
 	@Resource
 	private String eveUserId;
 	@Resource
-	private String eveApiKey;
-	@Resource
 	private BasicDao basicDao;
 
 	@RequestMapping("/index")
@@ -37,7 +35,7 @@ public class Example {
 			final HttpServletResponse response, final Model model)
 			throws Exception {
 		model.addAttribute("who", who);
-		model.addAttribute("chars", eveService.getCharacters(eveUserId, eveApiKey)
+		model.addAttribute("chars", eveService.getCharacters(eveUserId)
 				.getCharacterList());
 		List<Users> users = basicDao.getAllUsers();
 		model.addAttribute("users", users);

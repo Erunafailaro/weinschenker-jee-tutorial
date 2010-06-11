@@ -6,11 +6,8 @@ import org.weinschenker.demowebapp.dto.Characters;
 
 public interface EveService {
 
-	@Cacheable(modelId = "getCharactersModel")
-	public Characters getCharacters(final String eveUserId,
-			final String eveApiKey);
+	public Characters getCharacters(final String eveUserId);
 
-	@CacheFlush(modelId = "getCharactersFlushingModel")
 	public boolean addCharacter(final Character character);
 
 }

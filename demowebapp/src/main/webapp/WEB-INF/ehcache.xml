@@ -3,19 +3,19 @@
 	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
 	monitoring="autodetect" dynamicConfig="true">
 
-	<diskStore path="java.io.tmpdir" />
+	<!-- diskStore path="java.io.tmpdir" / -->
 	<defaultCache maxElementsInMemory="500" eternal="true"
 		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
 
 
-	<cache name="getCharacters" maxElementsInMemory="50" eternal="true"
-		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
-
-	<!-- cache name="org.weinschenker.demowebapp.persistence.entities.User"
-		maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="300"
-		timeToLiveSeconds="600" overflowToDisk="true" / -->
+	<cache name="getCharacters" maxElementsInMemory="10000" eternal="true"
+		timeToIdleSeconds="1200" timeToLiveSeconds="1200" overflowToDisk="true"
+		diskSpoolBufferSizeMB="1" maxElementsOnDisk="10000000" 
+		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
 
 	<cache name="org.hibernate.cache.StandardQueryCache"
-		maxElementsInMemory="5" eternal="false" timeToLiveSeconds="120"
-		overflowToDisk="true" />
+		maxElementsInMemory="10000" eternal="true" timeToIdleSeconds="1200"
+		timeToLiveSeconds="1200" overflowToDisk="true" diskSpoolBufferSizeMB="1"
+		maxElementsOnDisk="10000000" 
+		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
 </ehcache>

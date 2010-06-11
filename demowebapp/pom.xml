@@ -44,6 +44,9 @@
 			<filter>${env}.properties</filter>
 		</filters>
 		<resources>
+		      <resource>
+		        <directory>src/main/resources</directory>
+		      </resource>
 			<resource>
 				<directory>${basedir}/src/main/webapp/WEB-INF</directory>
 				<filtering>true</filtering>
@@ -307,7 +310,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
+			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.6.0</version>
 		</dependency>
 		<dependency>

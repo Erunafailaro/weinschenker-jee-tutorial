@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.weinschenker.demowebapp.eve.EveService;
+import org.weinschenker.demowebapp.eve.EveServiceImpl;
 import org.weinschenker.demowebapp.persistence.BasicDao;
 import org.weinschenker.demowebapp.persistence.entities.Users;
 
@@ -22,7 +22,7 @@ public class Example {
 	private static final Logger LOGGER = Logger.getLogger(Example.class);
 
 	@Resource
-	private EveService eveService;
+	private EveServiceImpl eveServiceImpl;
 	@Resource
 	private String eveUserId;
 	@Resource
@@ -35,7 +35,7 @@ public class Example {
 			final HttpServletResponse response, final Model model)
 			throws Exception {
 		model.addAttribute("who", who);
-		model.addAttribute("chars", eveService.getCharacters(eveUserId)
+		model.addAttribute("chars", eveServiceImpl.getCharacters(eveUserId)
 				.getCharacterList());
 		List<Users> users = basicDao.getAllUsers();
 		model.addAttribute("users", users);

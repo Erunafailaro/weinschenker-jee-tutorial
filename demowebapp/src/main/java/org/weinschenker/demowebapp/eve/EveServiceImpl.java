@@ -15,8 +15,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.ejb.EntityManagerFactoryImpl;
 import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 import org.springframework.stereotype.Service;
-import org.springmodules.cache.annotations.CacheFlush;
-import org.springmodules.cache.annotations.Cacheable;
 import org.w3c.dom.Document;
 import org.weinschenker.demowebapp.cache.MyCache;
 import org.weinschenker.demowebapp.dto.Characters;
@@ -26,7 +24,7 @@ import org.weinschenker.demowebapp.dto.Characters;
  * 
  */
 @Service
-public class EveServiceImpl implements EveService {
+public class EveServiceImpl {
 	private static final Logger LOGGER = Logger.getLogger(EveServiceImpl.class);
 
 	@Resource
@@ -82,7 +80,6 @@ public class EveServiceImpl implements EveService {
 	 * org.weinschenker.demowebapp.eve.EveService#addCharacter(java.lang.Character
 	 * )
 	 */
-	@CacheFlush(modelId = "getCharactersFlushingModel")
 	public boolean addCharacter(final Character character) {
 		return true;
 	}

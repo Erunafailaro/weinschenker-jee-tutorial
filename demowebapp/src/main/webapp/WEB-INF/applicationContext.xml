@@ -20,7 +20,7 @@
 		http://icoloma.blogspot.com/2006/11/jpa-and-spring-fucking-cooltm_26.html
 	-->
 	<context:annotation-config />
-	<aop:aspectj-autoproxy/> 
+	<aop:aspectj-autoproxy proxy-target-class="true" /> 
 	<!-- bean id="autoproxy"
 		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" / -->
 	<!-- bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" /-->

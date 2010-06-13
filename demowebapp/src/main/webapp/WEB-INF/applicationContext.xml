@@ -20,8 +20,11 @@
 		http://icoloma.blogspot.com/2006/11/jpa-and-spring-fucking-cooltm_26.html
 	-->
 	<context:annotation-config />
-	<bean id="autoproxy"
-		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+	<aop:aspectj-autoproxy/> 
+	<!-- bean id="autoproxy"
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" / -->
+	<!-- bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" /-->
+
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -34,16 +37,16 @@
 	<ehcache:config configLocation="classpath:/ehcache.xml"
 		failQuietly="false" />
 
-	<ehcache:annotations providerId="cacheProviderFacade">
+	<!-- ehcache:annotations providerId="cacheProviderFacade">
 		<ehcache:caching id="getCharactersModel" cacheName="getCharacters" />
 		<ehcache:flushing id="getCharactersFlushingModel"
 			cacheNames="getCharacters" when="after" />
-	</ehcache:annotations>
+	</ehcache:annotations -->
 	
 	
 	<!--  -->
-	
-    <!-- bean id="cachingAttributeSource" class="org.springmodules.cache.annotations.AnnotationCachingAttributeSource" />
+	<!-- 
+    <bean id="cachingAttributeSource" class="org.springmodules.cache.annotations.AnnotationCachingAttributeSource" />
 
     <bean id="cachingInterceptor" class="org.springmodules.cache.interceptor.caching.MetadataCachingInterceptor">
         <property name="cacheProviderFacade" ref="cacheProviderFacade" />
@@ -57,10 +60,10 @@
 
     <bean id="cachingAttributeSourceAdvisor" class="org.springmodules.cache.interceptor.caching.CachingAttributeSourceAdvisor">
         <constructor-arg ref="cachingInterceptor" />
-    </bean -->
+    </bean>
 
 
-	
+	-->
 	<!--  -->
 
 	<bean id="dataSource"

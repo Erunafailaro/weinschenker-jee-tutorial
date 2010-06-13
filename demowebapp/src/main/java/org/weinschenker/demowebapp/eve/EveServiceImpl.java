@@ -14,11 +14,11 @@ import net.sf.ehcache.Element;
 import org.apache.log4j.Logger;
 import org.hibernate.ejb.EntityManagerFactoryImpl;
 import org.springframework.orm.jpa.EntityManagerFactoryInfo;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springmodules.cache.annotations.CacheFlush;
 import org.springmodules.cache.annotations.Cacheable;
 import org.w3c.dom.Document;
+import org.weinschenker.demowebapp.cache.MyCache;
 import org.weinschenker.demowebapp.dto.Characters;
 
 /**
@@ -48,7 +48,8 @@ public class EveServiceImpl implements EveService {
 	 * , java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
-	@Cacheable(modelId = "getCharactersModel")
+	/* @Cacheable(modelId = "getCharactersModel") */
+	@MyCache(cacheName = "getCharacters")
 	public Characters getCharacters(final String eveUserId) {
 		cacheManager.toString();
 

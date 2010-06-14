@@ -5,7 +5,6 @@
 	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
 	xmlns:p="http://www.springframework.org/schema/p"
-
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
@@ -13,17 +12,36 @@
            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
            http://www.springmodules.org/schema/ehcache 
-           http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd"
-	default-dependency-check="none" default-lazy-init="false">
+           http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd">
 
 	<!--
 		http://icoloma.blogspot.com/2006/11/jpa-and-spring-fucking-cooltm_26.html
 	-->
 	<context:annotation-config />
-	<aop:aspectj-autoproxy proxy-target-class="true" /> 
-	<!-- bean id="autoproxy"
-		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" / -->
-	<!-- bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" /-->
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!--  bean name="cacheInterceptor"
+		class="org.weinschenker.demowebapp.cache.CacheInterceptor" /-->
+
+	<!-- aop:config>
+		<aop:aspect ref="cacheInterceptor">
+			<aop:pointcut id="myCacheannotation" expression="@annotation(myCache)" />
+			<aop:around pointcut-ref="myCacheannotation" method="doBasicProfiling" />
+		</aop:aspect>
+	</aop:config-->
+
+
+	<!--
+		bean id="autoproxy"
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+		/
+	-->
+	<!--
+		bean
+		class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"
+		/
+	-->
 
 
 	<bean id="messageSource"
@@ -32,37 +50,32 @@
 	</bean>
 
 	<bean id="cacheProviderFacade" class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
-        <property name="cacheManager" ref="cacheManager" />
-    </bean>
+		<property name="cacheManager" ref="cacheManager" />
+	</bean>
 	<ehcache:config configLocation="classpath:/ehcache.xml"
 		failQuietly="false" />
 
-	<!-- ehcache:annotations providerId="cacheProviderFacade">
-		<ehcache:caching id="getCharactersModel" cacheName="getCharacters" />
-		<ehcache:flushing id="getCharactersFlushingModel"
-			cacheNames="getCharacters" when="after" />
-	</ehcache:annotations -->
-	
-	
+	<!--
+		ehcache:annotations providerId="cacheProviderFacade"> <ehcache:caching
+		id="getCharactersModel" cacheName="getCharacters" /> <ehcache:flushing
+		id="getCharactersFlushingModel" cacheNames="getCharacters"
+		when="after" /> </ehcache:annotations
+	-->
+
+
 	<!--  -->
-	<!-- 
-    <bean id="cachingAttributeSource" class="org.springmodules.cache.annotations.AnnotationCachingAttributeSource" />
-
-    <bean id="cachingInterceptor" class="org.springmodules.cache.interceptor.caching.MetadataCachingInterceptor">
-        <property name="cacheProviderFacade" ref="cacheProviderFacade" />
-        <property name="cachingAttributeSource" ref="cachingAttributeSource" />
-        <property name="cachingModels">
-            <props>
-                <prop key="getCharactersModel">cacheName=getCharacters</prop>
-            </props>
-        </property>
-    </bean>
-
-    <bean id="cachingAttributeSourceAdvisor" class="org.springmodules.cache.interceptor.caching.CachingAttributeSourceAdvisor">
-        <constructor-arg ref="cachingInterceptor" />
-    </bean>
-
-
+	<!--
+		<bean id="cachingAttributeSource"
+		class="org.springmodules.cache.annotations.AnnotationCachingAttributeSource"
+		/> <bean id="cachingInterceptor"
+		class="org.springmodules.cache.interceptor.caching.MetadataCachingInterceptor">
+		<property name="cacheProviderFacade" ref="cacheProviderFacade" />
+		<property name="cachingAttributeSource" ref="cachingAttributeSource"
+		/> <property name="cachingModels"> <props> <prop
+		key="getCharactersModel">cacheName=getCharacters</prop> </props>
+		</property> </bean> <bean id="cachingAttributeSourceAdvisor"
+		class="org.springmodules.cache.interceptor.caching.CachingAttributeSourceAdvisor">
+		<constructor-arg ref="cachingInterceptor" /> </bean>
 	-->
 	<!--  -->
 

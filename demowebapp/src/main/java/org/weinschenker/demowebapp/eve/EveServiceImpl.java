@@ -46,25 +46,23 @@ public class EveServiceImpl {
 	 * , java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
-	/* @Cacheable(modelId = "getCharactersModel") */
 	@MyCache(cacheName = "getCharacters")
 	public Characters getCharacters(final String eveUserId) {
-		cacheManager.toString();
-
-		EntityManagerFactoryInfo emfi = (EntityManagerFactoryInfo) entityManagerFactory;
-		EntityManagerFactory emf = emfi.getNativeEntityManagerFactory();
-		EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl) emf;
+		final EntityManagerFactoryInfo emfi = (EntityManagerFactoryInfo) entityManagerFactory;
+		final EntityManagerFactory emf = emfi.getNativeEntityManagerFactory();
+		final EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl) emf;
+		
 		LOGGER.debug(empImpl.getSessionFactory().getStatistics());
-		List cache = cacheManager.getCache("getCharacters")
+		
+		final List cache = cacheManager.getCache("getCharacters")
 				.getKeysWithExpiryCheck();
-
 		if (!cache.contains(eveUserId)) {
 			final Document chars = httpConnector.getCharacters(eveUserId,
 					eveApiKey);
 			final Characters result = eveResponseConverter.getCharacters(chars);
 			LOGGER.debug("Number of characters: "
 					+ result.getCharacterList().size());
-			Element e = new Element(eveUserId, result);
+			final Element e = new Element(eveUserId, result);
 			cacheManager.getCache("getCharacters").put(e);
 			return result;
 		}

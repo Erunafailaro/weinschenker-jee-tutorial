@@ -5,6 +5,7 @@ package org.weinschenker.demowebapp.cache;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import net.sf.ehcache.CacheManager;
@@ -29,21 +30,29 @@ public class CacheInterceptor {
 
 	@Resource(name = "cacheManager")
 	private CacheManager cacheManager;
+	
+	@PostConstruct
+	public void init() {
+		LOGGER.debug("initialized CacheInterceptor");
+	}
 
 	/**
 	 * any public method
 	 */
 	@SuppressWarnings("unused")
 	@Pointcut(value = "execution(public * *(..))")
-	private void anyPublicMethod(){}
+	private void anyPublicMethod(){
+		// empty
+	}
 
 	/**
 	 * any method annotated "MyCache"
-	 * @param myCache
+	 * @param myCache 
 	 */
 	@SuppressWarnings("unused")
 	@Pointcut(value = "@annotation(myCache)", argNames = "myCache")
 	private void serviceCall(final MyCache myCache) {
+		// empty
 	}
 
 	/**
@@ -54,9 +63,10 @@ public class CacheInterceptor {
 	 * @param myCache
 	 * @return
 	 */
-	@Around(value = "anyPublicMethod() && serviceCall(myCache)")
+	@Around(value = "serviceCall(myCache)", argNames = "myCache")
 	public Object doBasicProfiling(ProceedingJoinPoint pjp,
 			final MyCache myCache) {
+		LOGGER.debug("########################## ASPECT ###########");
 		final Object[] args = pjp.getArgs();
 		final String cacheName = myCache.cacheName();
 		final List<Element> cache = (List<Element>) cacheManager.getCache(cacheName)

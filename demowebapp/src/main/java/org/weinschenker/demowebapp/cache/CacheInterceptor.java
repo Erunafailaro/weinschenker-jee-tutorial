@@ -62,10 +62,10 @@ public class CacheInterceptor {
 	 * @see http://forum.springsource.org/showthread.php?t=63512
 	 * @param pjp
 	 * @param myCache
-	 * @return
+	 * @return Object
 	 */
 	@Around(value = "serviceCall(myCache)", argNames = "myCache")
-	public Object doCachingWrap(ProceedingJoinPoint pjp,
+	public Object doCachingWrap(final ProceedingJoinPoint pjp,
 			final MyCache myCache) {
 		final String cacheName = myCache.cacheName();
 		final Cache cache = cacheManager.getCache(cacheName);
@@ -76,8 +76,8 @@ public class CacheInterceptor {
 		final Object[] args = pjp.getArgs();
 		final List<Element> cacheList = (List<Element>) cache.getKeysWithExpiryCheck();
 		final String cacheKey = (String)args[0];
-		if (!cacheList.contains(cacheKey)) {
-		    Object retVal = null;
+		if (! cacheList.contains(cacheKey)) {
+			Object retVal = null;
 			try {
 				retVal = pjp.proceed();
 			} catch (Throwable e) {

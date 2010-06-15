@@ -97,17 +97,32 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>checkstyle</goal>
-						</goals>
-					</execution>
-				</executions>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.5</version>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<id>demowebapp checkstyle checks</id>
+						<phase>verify</phase>
+						<goals><goal>checkstyle</goal></goals>
+						<configuration>
+							<configLocation>${basedir}/checkstyle.xml</configLocation>
+							<failsOnError>true</failsOnError>
+							<consoleOutput>true</consoleOutput>
+							<includeTestSourceDirectory>true</includeTestSourceDirectory>
+							<excludes />
+						</configuration>
+					</execution>
+				</executions>
+				<!-- http://jira.codehaus.org/browse/MCHECKSTYLE-129 -->
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-resources</artifactId>
+						<version>1.0-alpha-7</version>
+					</dependency>
+		        </dependencies>
 			</plugin>
 			<plugin>
 				<groupId>com.sun.tools.xjc.maven2</groupId>
@@ -143,32 +158,10 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<webXml>${project.build.directory}/demowebapp/WEB-INF/web.xml</webXml>
-					<!--
-						webResources> <resource>
-						<directory>src/main/webapp/WEB-INF</directory>
-						<targetPath>WEB-INF/classes/META-INF</targetPath> <includes>
-						<include>persistence.xml</include> </includes> </resource>
-						</webResources
-					-->
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	<!--
-		repositories> <repository> <id>java.net</id> <name>java.net Maven
-		Repository</name>
-		<url>https://maven-repository.dev.java.net/nonav/repository</url>
-		<layout>legacy</layout> </repository> <repository>
-		<id>maven2-repository.dev.java.net</id> <name>Java.net Repository for
-		Maven</name> <url>http://download.java.net/maven/2/</url>
-		<layout>default</layout> </repository> <repository>
-		<id>springsource-release</id>
-		<url>http://repository.springsource.com/maven/bundles/release</url>
-		</repository> <repository> <id>mmirrors.ibiblio.org</id>
-		<name>ibiblio.org Repository for Maven</name>
-		<url>http://mirrors.ibiblio.org/pub/mirrors/maven2//</url>
-		<layout>default</layout> </repository> </repositories
-	-->
 	<repositories>
 		<repository>
 			<id>JBoss</id>

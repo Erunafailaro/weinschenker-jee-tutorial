@@ -20,30 +20,6 @@
 	<context:annotation-config />
 
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-
-	<!--  bean name="cacheInterceptor"
-		class="org.weinschenker.demowebapp.cache.CacheInterceptor" /-->
-
-	<!-- aop:config>
-		<aop:aspect ref="cacheInterceptor">
-			<aop:pointcut id="myCacheannotation" expression="@annotation(myCache)" />
-			<aop:around pointcut-ref="myCacheannotation" method="doBasicProfiling" />
-		</aop:aspect>
-	</aop:config-->
-
-
-	<!--
-		bean id="autoproxy"
-		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-		/
-	-->
-	<!--
-		bean
-		class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"
-		/
-	-->
-
-
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="org.weinschenker.demowebapp.messages"></property>
@@ -54,31 +30,6 @@
 	</bean>
 	<ehcache:config configLocation="classpath:/ehcache.xml"
 		failQuietly="false" />
-
-	<!--
-		ehcache:annotations providerId="cacheProviderFacade"> <ehcache:caching
-		id="getCharactersModel" cacheName="getCharacters" /> <ehcache:flushing
-		id="getCharactersFlushingModel" cacheNames="getCharacters"
-		when="after" /> </ehcache:annotations
-	-->
-
-
-	<!--  -->
-	<!--
-		<bean id="cachingAttributeSource"
-		class="org.springmodules.cache.annotations.AnnotationCachingAttributeSource"
-		/> <bean id="cachingInterceptor"
-		class="org.springmodules.cache.interceptor.caching.MetadataCachingInterceptor">
-		<property name="cacheProviderFacade" ref="cacheProviderFacade" />
-		<property name="cachingAttributeSource" ref="cachingAttributeSource"
-		/> <property name="cachingModels"> <props> <prop
-		key="getCharactersModel">cacheName=getCharacters</prop> </props>
-		</property> </bean> <bean id="cachingAttributeSourceAdvisor"
-		class="org.springmodules.cache.interceptor.caching.CachingAttributeSourceAdvisor">
-		<constructor-arg ref="cachingInterceptor" /> </bean>
-	-->
-	<!--  -->
-
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.h2.Driver" />
@@ -163,37 +114,4 @@
 			<value>${eveApiKey}</value>
 		</constructor-arg>
 	</bean>
-
-	<!--
-		<bean id="cacheProvider"
-		class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
-		<property name="cacheManager" ref="cacheManager" /> </bean> <bean
-		id="cacheManager"
-		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:ehcache.xml" />
-		</bean> <bean id="cachingAttributeSource"
-		class="org.springmodules.cache.annotations.AnnotationCachingAttributeSource"
-		/> <bean id="cachingInterceptor"
-		class="org.springmodules.cache.interceptor.caching.MetadataCachingInterceptor">
-		<property name="cacheProviderFacade" ref="cacheProvider" /> <property
-		name="cachingAttributeSource" ref="cachingAttributeSource" />
-		<property name="cachingModels"> <props> <prop
-		key="getCharactersModel">cacheName=getCharacters</prop> </props>
-		</property> </bean> <bean id="cachingAttributeSourceAdvisor"
-		class="org.springmodules.cache.interceptor.caching.CachingAttributeSourceAdvisor">
-		<constructor-arg ref="cachingInterceptor" /> </bean> <bean
-		id="flushingAttributeSource"
-		class="org.springmodules.cache.annotations.AnnotationFlushingAttributeSource"></bean>
-
-		<bean id="flushingInterceptor"
-		class="org.springmodules.cache.interceptor.flush.MetadataFlushingInterceptor">
-		<property name="cacheProviderFacade" ref="cacheProvider" /> <property
-		name="flushingAttributeSource" ref="flushingAttributeSource" />
-		<property name="flushingModels"> <props> <prop
-		key="getCharactersFlushingModel">cacheNames=getCharacters</prop>
-		</props> </property> </bean> <bean id="flushingAttributeSourceAdvisor"
-		class="org.springmodules.cache.interceptor.flush.FlushingAttributeSourceAdvisor">
-		<constructor-arg ref="flushingInterceptor" /> </bean>
-	-->
-
 </beans>

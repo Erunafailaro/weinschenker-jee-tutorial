@@ -29,15 +29,11 @@ public class Example {
 	private BasicDao basicDao;
 
 	@RequestMapping("/index")
-	public String show(
-			final @RequestParam(value = "who", required = false) String who,
-			final HttpServletRequest request,
-			final HttpServletResponse response, final Model model)
-			throws Exception {
+	public String show(@RequestParam(value = "who", required = false) final String who,
+			final HttpServletRequest request, final HttpServletResponse response, final Model model) throws Exception {
 		model.addAttribute("who", who);
-		model.addAttribute("chars", eveServiceImpl.getCharacters(eveUserId)
-				.getCharacterList());
-		List<Users> users = basicDao.getAllUsers();
+		model.addAttribute("chars", eveServiceImpl.getCharacters(eveUserId).getCharacterList());
+		final List<Users> users = basicDao.getAllUsers();
 		model.addAttribute("users", users);
 
 		return "main";

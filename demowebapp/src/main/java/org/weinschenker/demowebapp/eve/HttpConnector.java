@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -59,8 +58,8 @@ public class HttpConnector {
 		final GetMethod get = new GetMethod(uri.toString());
 		try {
 			final int resultcode = client.executeMethod(get);
-			LOGGER.debug("executed " + uri.toString() + " - result: "
-					+ resultcode);
+			LOGGER.debug("executed " + uri.toString() + " - result: " +
+					resultcode);
 			if (resultcode != 200) {
 				return null;
 			}
@@ -133,8 +132,8 @@ public class HttpConnector {
 						String systemId) {
 					ByteArrayInputStream bais = new ByteArrayInputStream(""
 							.getBytes());
-					LOGGER.debug("resolveEntity:" + publicId + "|"
-							+ systemId);
+					LOGGER.debug("resolveEntity:" + publicId + "|" +
+							systemId);
 					return new InputSource(bais);
 				}
 			});

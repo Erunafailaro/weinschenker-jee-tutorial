@@ -18,7 +18,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "EVEONLINE.TABLE_USERS")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@NamedQueries( {
+@NamedQueries({
 		@NamedQuery(name = "users.oneuser", query = "select u from Users u where u.name = :name and u.password = :password", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }),
 		@NamedQuery(name = "users.all", query = "select u from Users u", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }) })
 public class Users implements Serializable {

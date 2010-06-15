@@ -26,13 +26,13 @@ public class EveResponseConverter {
 
 	private static final Logger LOGGER = Logger.getLogger(EveResponseConverter.class);
 
-	public Characters getCharacters(Document chars) {
+	public Characters getCharacters(final Document chars) {
 		final Characters result = new Characters();
 		final NodeList nodeList = getNodeList(chars, "//row");
-		if (nodeList == null){
+		if (nodeList == null) {
 			return result;
 		}
-		for (int i = 0 ; i < nodeList.getLength(); i++) {
+		for (int i = 0; i < nodeList.getLength(); i++) {
 			final Character eachNewChar = new Character();
 			final Node eachNode = nodeList.item(i);
 			final String eachName = getAttributeFromNode(eachNode, "@name");

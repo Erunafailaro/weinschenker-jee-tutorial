@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * @author jawe1de
  *
  */
-@Target( { ElementType.METHOD })
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MyCache {
 	

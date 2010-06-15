@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
@@ -66,13 +67,16 @@ public class CacheInterceptor {
 	@Around(value = "serviceCall(myCache)", argNames = "myCache")
 	public Object doBasicProfiling(ProceedingJoinPoint pjp,
 			final MyCache myCache) {
-		LOGGER.debug("########################## ASPECT ###########");
-		final Object[] args = pjp.getArgs();
 		final String cacheName = myCache.cacheName();
-		final List<Element> cache = (List<Element>) cacheManager.getCache(cacheName)
-				.getKeysWithExpiryCheck();
+		final Cache cache = cacheManager.getCache(cacheName);
+		if (cache == null) {
+			LOGGER.error("EhCache " + cacheName + " is null!");
+			return null;
+		}
+		final Object[] args = pjp.getArgs();
+		final List<Element> cacheList = (List<Element>) cache.getKeysWithExpiryCheck();
 		final String cacheKey = (String)args[0];
-		if (!cache.contains(cacheKey)) {
+		if (!cacheList.contains(cacheKey)) {
 		    Object retVal = null;
 			try {
 				retVal = pjp.proceed();
@@ -83,11 +87,12 @@ public class CacheInterceptor {
 				return null;
 			}
 			final Element e = new Element(cacheKey, retVal);
-			cacheManager.getCache("cacheName").put(e);
+			cacheManager.getCache(cacheName).put(e);
 			return retVal;
 
 		}
-		final Element e = cacheManager.getCache(cacheName).get(cacheKey);
+		LOGGER.debug("Cache hit - " + cacheName);
+		final Element e = cache.get(cacheKey);
 		final Object cachedObject =  e.getObjectValue();
 		return cachedObject;
 

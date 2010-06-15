@@ -17,5 +17,7 @@ import java.lang.annotation.Target;
 public @interface MyCache {
 
 	String cacheName();
+	
+	int[] keyParams() default {};
 
 }

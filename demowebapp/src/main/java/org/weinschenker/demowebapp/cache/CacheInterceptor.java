@@ -75,7 +75,21 @@ public class CacheInterceptor {
 		}
 		final Object[] args = pjp.getArgs();
 		final List<Element> cacheList = (List<Element>) cache.getKeysWithExpiryCheck();
-		final String cacheKey = (String)args[0];
+
+		String cacheKey = "";
+		if (myCache.keyParams() == null || myCache.keyParams().length == 0) {
+			cacheKey = (String)args[0];
+		} else {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < myCache.keyParams().length; i++) {
+				int parameterIndex = myCache.keyParams()[i];
+				if (i > 0) {
+					sb.append(".");
+				}
+				sb.append((String)args[parameterIndex]);
+			}
+			cacheKey = sb.toString();
+		}
 		if (! cacheList.contains(cacheKey)) {
 			Object retVal = null;
 			try {

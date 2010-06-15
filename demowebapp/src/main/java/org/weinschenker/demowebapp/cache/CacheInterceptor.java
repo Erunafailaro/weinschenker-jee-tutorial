@@ -83,10 +83,13 @@ public class CacheInterceptor {
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < myCache.keyParams().length; i++) {
 				int parameterIndex = myCache.keyParams()[i];
-				if (i > 0) {
-					sb.append(".");
+				final Object eachStringParam = args[parameterIndex];
+				if (eachStringParam instanceof String){
+					if (i > 0) {
+						sb.append(".");
+					}
+					sb.append((String)args[parameterIndex]);
 				}
-				sb.append((String)args[parameterIndex]);
 			}
 			cacheKey = sb.toString();
 		}

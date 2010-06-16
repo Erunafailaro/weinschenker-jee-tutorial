@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,8 @@ public class HttpConnector {
 	private String eveApiChars;
 
 	public Document getCharacters(final String eveUserId, final String eveApiKey) {
-		final Map<String, String> params = createParameterMap(eveUserId, eveApiKey);
+		final Map<String, String> params = createParameterMap(eveUserId,
+				eveApiKey);
 		final Document response = getDocument(eveApiChars, params);
 		return response;
 	}
@@ -60,7 +62,7 @@ public class HttpConnector {
 			final int resultcode = client.executeMethod(get);
 			LOGGER.debug("executed " + uri.toString() + " - result: " +
 					resultcode);
-			if (resultcode != 200) {
+			if (resultcode != HttpStatus.SC_OK) {
 				return null;
 			}
 			final BufferedInputStream bis = new BufferedInputStream(get
@@ -89,7 +91,8 @@ public class HttpConnector {
 			uriString.append(host.trim());
 			uriString.append(path.trim());
 			String delim = "?";
-			for (Iterator<String> i = params.keySet().iterator(); i.hasNext();) {
+			for (final Iterator<String> i = params.keySet().iterator(); i
+					.hasNext();) {
 				final String eachKey = i.next();
 				uriString.append(delim + eachKey + "=");
 				uriString.append(params.get(eachKey));
@@ -104,11 +107,12 @@ public class HttpConnector {
 	}
 
 	/**
-	 * Create a basic map containing userId and apiKey;
+	 * Create a basic map containing userId and apiKey.
 	 * 
 	 * @return
 	 */
-	private Map<String, String> createParameterMap(final String eveUserId, final String eveApiKey) {
+	private Map<String, String> createParameterMap(final String eveUserId,
+			final String eveApiKey) {
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put("userID", eveUserId);
 		params.put("apiKey", eveApiKey);
@@ -128,12 +132,12 @@ public class HttpConnector {
 		try {
 			final DocumentBuilder db = fact.newDocumentBuilder();
 			db.setEntityResolver(new EntityResolver() {
-				public InputSource resolveEntity(String publicId,
-						String systemId) {
+				public InputSource resolveEntity(final String publicId,
+						final String systemId) {
 					ByteArrayInputStream bais = new ByteArrayInputStream(""
 							.getBytes());
-					LOGGER.debug("resolveEntity:" + publicId + "|" +
-							systemId);
+					LOGGER.debug("resolveEntity:" + publicId + "|"
+							+ systemId);
 					return new InputSource(bais);
 				}
 			});

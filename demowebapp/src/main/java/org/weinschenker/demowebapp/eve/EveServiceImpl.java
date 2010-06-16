@@ -37,7 +37,8 @@ public class EveServiceImpl {
 	 * , java.lang.String)
 	 */
 	@MyCache(cacheName = "getCharacters", keyParams = {0, 1})
-	public Characters getCharacters(final String eveUserId, final String eveApiKey) {
+	public Characters getCharacters(final String eveUserId,
+			final String eveApiKey) {
 		final EntityManagerFactoryInfo emfi = (EntityManagerFactoryInfo) entityManagerFactory;
 		final EntityManagerFactory emf = emfi.getNativeEntityManagerFactory();
 		final EntityManagerFactoryImpl empImpl = (EntityManagerFactoryImpl) emf;

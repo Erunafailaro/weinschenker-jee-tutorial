@@ -40,7 +40,7 @@ public class BasicDAOImpl extends HibernateDaoSupport implements BasicDao {
 	 * .persistence.EntityManager)
 	 */
 	@PersistenceContext
-	public void setEntityManager(EntityManager entityManager) {
+	public void setEntityManager(final EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 
@@ -52,7 +52,7 @@ public class BasicDAOImpl extends HibernateDaoSupport implements BasicDao {
 	 * java.lang.Object)
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Users> query(String queryString, final Object... params) {
+	public List<Users> query(final String queryString, final Object... params) {
 		final Query query = entityManager.createQuery(queryString);
 		query.setParameter("param", "true");
 		return query.getResultList();

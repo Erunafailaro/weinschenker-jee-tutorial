@@ -18,8 +18,12 @@ public @interface MyCache {
 
 	/**
 	 * The two modes in which caching can be done.
-	 * @author jawe1de
-	 *
+	 * 
+	 * <ul>
+	 * <li>{@link #PUT}: Add data to the cache.</li>
+	 * <li>{@link #FLUSH}: Remove data from the cache.</li>
+	 * </ul>
+	 * 
 	 */
 	public enum Mode {PUT, FLUSH}
 	

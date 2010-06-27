@@ -23,7 +23,6 @@ import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 import org.springframework.stereotype.Service;
 
 /**
- * @author jawe1de
  * 
  */
 @Service

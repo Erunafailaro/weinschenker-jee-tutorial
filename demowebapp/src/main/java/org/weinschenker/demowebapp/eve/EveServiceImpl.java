@@ -13,7 +13,6 @@ import org.weinschenker.demowebapp.cache.MyCache.Mode;
 import org.weinschenker.demowebapp.dto.Characters;
 
 /**
- * @author jawe1de
  * 
  */
 @Service

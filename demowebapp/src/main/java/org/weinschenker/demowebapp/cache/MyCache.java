@@ -9,7 +9,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author jawe1de
  * 
  */
 @Target(ElementType.METHOD)

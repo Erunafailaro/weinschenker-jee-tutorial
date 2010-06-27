@@ -16,7 +16,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.weinschenker.demowebapp.persistence.entities.Users;
 
 /**
- * @author jawe1de
  * 
  */
 public class BasicDAOImpl extends HibernateDaoSupport implements BasicDao {

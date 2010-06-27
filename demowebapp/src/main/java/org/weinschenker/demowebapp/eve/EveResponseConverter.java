@@ -18,7 +18,6 @@ import org.weinschenker.demowebapp.dto.Characters;
 
 
 /**
- * @author jawe1de
  * 
  */
 @Component

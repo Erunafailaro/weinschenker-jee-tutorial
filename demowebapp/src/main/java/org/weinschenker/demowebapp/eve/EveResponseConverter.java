@@ -39,6 +39,9 @@ public class EveResponseConverter {
 		}
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			final Character eachNewChar = dtoFactory.createCharacter();
+			if (eachNewChar == null) {
+				continue; // prevent npe
+			}
 			final Node eachNode = nodeList.item(i);
 			final String eachName = getAttributeFromNode(eachNode, "@name");
 			final String eachCharId = getAttributeFromNode(eachNode, "@characterID");
@@ -49,6 +52,7 @@ public class EveResponseConverter {
 			eachNewChar.setCorporationName(eachCorporationName);
 			eachNewChar.setCorporationID(eachCorporationID);
 			result.getCharacterList().add(eachNewChar);
+
 		}
 		return result;
 	}

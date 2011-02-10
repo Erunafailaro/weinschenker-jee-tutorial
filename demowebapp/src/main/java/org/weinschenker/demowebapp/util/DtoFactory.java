@@ -15,25 +15,29 @@ import org.weinschenker.demowebapp.eve.EveResponseConverter;
 
 /**
  * @author jawe1de
- *
+ * 
  */
 @Component
 public class DtoFactory {
-	
-	private static final Logger LOGGER = Logger.getLogger(EveResponseConverter.class);
+
+	private static final Logger LOGGER = Logger
+			.getLogger(EveResponseConverter.class);
 
 	private ObjectFactory objectFactory = null;
 
 	@PostConstruct
-	public void init(){
+	public void init() {
 		try {
 			objectFactory = new ObjectFactory();
 		} catch (JAXBException e) {
 			LOGGER.error("Could not create objectFactory", e);
 		}
 	}
-	
-	public Character createCharacter(){
+
+	public Character createCharacter() {
+		if (objectFactory == null) {
+			return null;
+		}
 		try {
 			return objectFactory.createCharacter();
 		} catch (JAXBException e) {
@@ -41,7 +45,11 @@ public class DtoFactory {
 			return null;
 		}
 	}
-	public Characters createCharacters(){
+
+	public Characters createCharacters() {
+		if (objectFactory == null) {
+			return null;
+		}
 		try {
 			return objectFactory.createCharacters();
 		} catch (JAXBException e) {

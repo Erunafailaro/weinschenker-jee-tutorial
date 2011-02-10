@@ -1,32 +1,16 @@
-<project name="MyProject" default="tomcat-start-debug" basedir=".">
+<project name="MyProject" default="copy.war" basedir=".">
 	<description>
         simple example build file
     </description>
 	<property name="name" value="newapp" />
-	<property file="build.properties" />
-	<taskdef name="start" classname="org.apache.catalina.ant.StartTask" />
-	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask" />
-
-	<target name="tomcat-start">
-		<java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
-			<jvmarg value="-Dcatalina.home=${tomcat.home}" />
-		</java>
-	</target>
-
-	<target name="tomcat-stop">
-		<java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
-			<jvmarg value="-Dcatalina.home=${tomcat.home}" />
-			<arg line="stop" />
-		</java>
-	</target>
-
-	<target name="tomcat-start-debug">
-		<java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
-			<jvmarg value="-Dcatalina.home=${tomcat.home}" />
-			<jvmarg value="-Xdebug" />
-			<jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n" />
-		</java>
-	</target>
+	<property file="./ant/build.properties" />
+	<taskdef file="./ant/tomcatTasks.properties">
+		<classpath>
+			<pathelement path="${tomcat.home}/server/lib/catalina-ant.jar" />
+		</classpath>
+	</taskdef>
+	<path id="maven-ant-tasks.classpath" path="${mvn.lib}" />
+	<typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="antlib:org.apache.maven.artifact.ant" classpathref="maven-ant-tasks.classpath" />
 
 	<target name="copy.jsp">
 		<copy verbose="true" todir="${tomcat.home}/webapps/${demo.path}">
@@ -56,6 +40,10 @@
 				<include name="**/*" />
 			</fileset>
 		</delete>
+	</target>
+
+	<target name="deploy">
+		<deploy url="${tomcat.manager}" username="${tomcat.username}" password="${tomcat.password}" path="/demowebapp" update="true" localWar="${project.path}target\demowebapp.war" />
 	</target>
 	
 </project>

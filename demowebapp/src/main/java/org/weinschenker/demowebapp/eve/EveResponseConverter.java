@@ -3,6 +3,7 @@
  */
 package org.weinschenker.demowebapp.eve;
 
+import javax.annotation.Resource;
 import javax.xml.transform.TransformerException;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,6 +16,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.weinschenker.demowebapp.dto.Character;
 import org.weinschenker.demowebapp.dto.Characters;
+import org.weinschenker.demowebapp.util.DtoFactory;
 
 
 /**
@@ -24,15 +26,19 @@ import org.weinschenker.demowebapp.dto.Characters;
 public class EveResponseConverter {
 
 	private static final Logger LOGGER = Logger.getLogger(EveResponseConverter.class);
-
+	
+	@Resource
+	private DtoFactory dtoFactory;
+	
 	public Characters getCharacters(final Document chars) {
-		final Characters result = new Characters();
+
+		final Characters result = dtoFactory.createCharacters();
 		final NodeList nodeList = getNodeList(chars, "//row");
 		if (nodeList == null) {
 			return result;
 		}
 		for (int i = 0; i < nodeList.getLength(); i++) {
-			final Character eachNewChar = new Character();
+			final Character eachNewChar = dtoFactory.createCharacter();
 			final Node eachNode = nodeList.item(i);
 			final String eachName = getAttributeFromNode(eachNode, "@name");
 			final String eachCharId = getAttributeFromNode(eachNode, "@characterID");

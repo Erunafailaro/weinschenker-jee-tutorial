@@ -169,11 +169,22 @@
 	</build>
 	<repositories>
 		<repository>
+			<id>Maven repo1</id>
+			<name>Maven Repsitory</name>
+			<layout>default</layout>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
 			<id>JBoss</id>
 			<name>JBoss Repsitory</name>
 			<layout>default</layout>
 			<url>http://repository.jboss.org/maven2</url>
 		</repository>
+		<repository>
+        	<id>repository.jboss.org</id>
+        	<name>JBoss.org Maven repository</name>
+    	    <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+	    </repository>
 		<repository>
 			<id>codehaus</id>
 			<name>Codehaus Release Repo</name>
@@ -184,6 +195,11 @@
 			<name>mirrors.ibiblio.org</name>
 			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
 		</repository>
+	    <repository>
+	        <id>sharca.com.repo</id>
+	        <name>SharcaConsulting Repository</name>
+	        <url>http://www.sharca.com/repository</url>
+	    </repository>
 		<repository>
 			<id>codehaus-snapshot</id>
 			<name>Codehaus Snapshot Repo</name>
@@ -235,6 +251,16 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.15</version>
+		    <exclusions>
+		        <exclusion>
+		          <groupId>com.sun.jdmk</groupId>
+		          <artifactId>jmxtools</artifactId>
+		        </exclusion>
+		        <exclusion>
+		          <groupId>com.sun.jmx</groupId>
+		          <artifactId>jmxri</artifactId>
+		        </exclusion>
+		    </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
@@ -329,7 +355,7 @@
 		<dependency>
 			<groupId>org.springmodules</groupId>
 			<artifactId>spring-modules-cache</artifactId>
-			<version>0.9</version>
+			<version>0.10-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>gigaspaces-ce</artifactId>
